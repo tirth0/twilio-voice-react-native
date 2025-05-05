@@ -43,10 +43,11 @@ public class VoiceActivityProxy {
     }
     NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-    if (notificationManager != null && !notificationManager.canUseFullScreenIntent()) {
-      // Permission not granted, launch settings page
-      Intent intent = new Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
-      context.startActivity(intent);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) { // API 34
+      if (notificationManager != null && !notificationManager.canUseFullScreenIntent()) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        context.startActivity(intent);
+      }
     }
     // These flags ensure that the activity can be launched when the screen is locked.
     Window window = context.getWindow();
